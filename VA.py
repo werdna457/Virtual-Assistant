@@ -18,7 +18,7 @@ def listen():   #Listening Function
     data=""
     try:
         data = r.recognize_google(audio,language='en-GB')
-        print("You said:"+data)
+        print("You said: "+data)
     except sr.UnknownValueError:
         print("I cannot hear you")
     except sr.RequestError as e:
@@ -49,10 +49,12 @@ def voice_assistant(data):  #Assistant program
         apoin = listen()
         f.write("\n" + apoin)
         f.close()
+    if ("appointment" in data) or ("appointments" in data) or ("calendar" in data):
+        listening = True
         f = open('Aps.txt','r')  #Open in read mode
         aps = f.read()
-        speech = str("Your calender now reads " + aps)
-        respond(speech)
+        words = str("Your appointments are: " + aps);
+        respond(words)
         f.close()
     if "goodbye" in data:
         respond("Goodbye")
